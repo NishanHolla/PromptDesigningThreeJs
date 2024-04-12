@@ -1,0 +1,307 @@
+.App {
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.icon{
+  position:absolute;
+  top: 13px;
+  right: 60px;
+  height: 30px;
+  aspect-ratio: 16 / 12;
+}
+
+#searchbar{
+  width: 250px; 
+  position:absolute;
+  top: 10px;
+  right: 110px;
+}
+
+.icon img{
+  height: 100%;
+  width: 100%;
+}
+
+::placeholder{
+  font-style: italic;
+}
+
+
+.center {
+  border: 5px solid;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.footer{
+  padding-top: 20px;
+  padding-bottom: 30px;
+  display: inline-flex;
+  text-align: left;
+}
+
+ul{
+  list-style: none;
+  padding-inline: 90px;
+}
+
+.bold{
+  font-weight: 500;
+  font-size: 20px;
+  margin-left: -10px;
+  padding-bottom: 8px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.banner{
+  width: 70%;
+  aspect-ratio: 16 / 9;
+}
+
+.banner img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.floatingbanner{
+  color: red;
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: auto;
+  margin-left: auto; 
+  width: 50%;
+  text-decoration: none;
+}
+
+.main{
+  padding-left: 10%;
+  height: 30px;
+  aspect-ratio: 16 / ;
+}
+
+.main img{
+  height: 100%;
+  width: 100%;
+}
+
+@keyframes rainbow{
+  0% {
+    background-position: 0% 50%;
+}
+
+50% {
+    background-position: 100% 25%;
+}
+100% {
+    background-position: 0% 50%;
+}
+}
+
+.new{
+  background-image: repeating-linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
+  text-align: center;
+  background-size: 800% 800%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 18px;
+  font-style: italic;
+  border:1px solid black;
+  padding: 4px;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-radius: 10px;
+  animation: rainbow 8s ease infinite;
+  position: relative;
+  left: -80px;
+}
+
+This is for products components
+/* Product.css */
+.product {
+  width: calc(33.33% - 20px); /* 33.33% width for each product with some spacing */
+  margin-bottom: 1cap; /* Add some bottom margin for spacing between rows */
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+  margin-right: 15px; /* Add margin between items */
+}
+
+.product-image {
+  width: 400px;  
+  height: auto;
+  object-fit: cover;
+}
+
+.product-name {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.product-description {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.product-price {
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.product-addtocart{
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-buynow{
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 30px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-button:hover {
+  background-color: #0056b3;
+}
+
+/* MainPage.css */
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-style: italic;
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.product-banner{
+  width: 1200px;
+  height: auto;
+  display: block;
+  margin: 0 auto; 
+}
+
+.nav-item{
+  padding: 5px;
+}
+
+@keyframes colorfulTextAnimation {
+  0% { color: red; }
+  25% { color: blue; }
+  50% { color: green; }
+  75% { color: yellow; }
+  100% { color: red; }
+}
+
+.colorful-text {
+  animation: colorfulTextAnimation 2s infinite;
+}
+
+.checkout-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-form h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.checkout-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.checkout-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkout-form button {
+  width: 100%;
+  padding: 1rem;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-form button:hover {
+  background-color: #4cae4c;
+}
