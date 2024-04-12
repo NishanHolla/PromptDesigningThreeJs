@@ -20,8 +20,8 @@ function Root() {
         <Navbar></Navbar>
       </header>
       <main>
+        <Slideshow></Slideshow>
         <div style={{justifyItems:"flex"}}>
-          <Slideshow></Slideshow>
           <div style={{display:"inline-flex"}}>
             <img src={prd1} style={img_size}></img>
             <img src={prd2} style={img_size}></img>

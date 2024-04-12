@@ -7,8 +7,10 @@ import { Link } from "react-router-dom";
 function Navbar(){
     return(
     <div>
-    <nav class="navbar navbar-expand-lg" style={{backgroundColor:"pink", height:"20px"}}>
-        <a class="navbar-brand" className="floatingbanner" href="/">Free shipping for orders above Rs.999</a> 
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "pink", height: "24px" }}>
+      <div className="navbar-collapse d-flex justify-content-center">
+        <a className="navbar floatingbanner" href="/">Free shipping for orders above Rs.999</a>
+      </div>
     </nav>
     <nav class="navbar navbar-expand-lg">
       <a class="navbar-brand" href="/">
@@ -19,31 +21,30 @@ function Navbar(){
       </button>
       
       <div>
-          <Link className="nav-item" to='products'>
+          <Link className="nav-item" to='/products'>
             DRESSES
           </Link>
-          <Link className="nav-item" to='products'>
+          <Link className="nav-item" to='/products'>
             JEWELERY
           </Link>
-          <Link className="nav-item" to='products'>
+          <Link className="nav-item" to='/products'>
             SHIRTS
           </Link>
-          <Link className="nav-item" to='products'>
+          <Link className="nav-item" to='/products'>
             SUNGLASSES
           </Link>
-          <Link className="colorful-text" to='BoutiqueGPT'>
+          <Link className="colorful-text" to='/BoutiqueGPT'>
             Prompt Designing
           </Link>
         <aside>
         <input class="form-control mr-sm-2" id="searchbar" type="search" placeholder="What am i wearing next ..." aria-label="Search" />
-        <a href="/">
+        <Link to='/checkout'>
           <img src={cart} className="icon"></img>
-        </a>
+        </Link>
         <Link to="/login">
           <img src={user} style={{right:"10px"}} className="icon"></img>
         </Link>
         </aside>
-        
       </div>
     </nav>
     </div>

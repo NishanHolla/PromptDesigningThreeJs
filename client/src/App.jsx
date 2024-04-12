@@ -2,13 +2,14 @@ import Canvas from './canvas';
 import Customizer from './pages/Customizer';
 import Home from './pages/Home';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
 import Root from './routes/root';
 import Login from './routes/login';
 import Register from './routes/register';
 import ErrorPage from './error-page';
 import MainPage from './components/products/mainpage';
-import Checkout from './components/checkout';
+import CheckoutPage from './checkout';
+import { proxy,useSnapshot } from 'valtio';
+import state from './store/index'; 
 
 function BoutiqueGPT(){
   return(
@@ -21,19 +22,18 @@ function BoutiqueGPT(){
 }
 
 function App() {
+  const { isLoggedIn } = useSnapshot(state);
   return (
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<Root />} />
         <Route path="*" element={<ErrorPage />} />
         <Route path="products" element={<MainPage />} />
+        <Route path="checkout" element={<CheckoutPage />} />
         <Route path="*" element={<ErrorPage />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path="/auth" element={<PrivateRoute />} >
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="BoutiqueGPT" element={<BoutiqueGPT />} />
-        </Route> 
+        <Route path='/BoutiqueGPT' element={isLoggedIn?<BoutqiueGPT/>:<Login/>}></Route>
         </Routes>
       </BrowserRouter>
   );
