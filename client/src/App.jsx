@@ -33,7 +33,7 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path='/BoutiqueGPT' element={isLoggedIn?<BoutqiueGPT/>:<Login/>}></Route>
+        <Route path='/BoutiqueGPT' element={<BoutiqueGPT/>}></Route>
         </Routes>
       </BrowserRouter>
   );
