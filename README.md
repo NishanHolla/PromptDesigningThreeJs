@@ -66,11 +66,5 @@ We welcome contributions from the community! If you'd like to contribute to the 
 4. Push to the branch: `git push origin feature/my-feature`.
 5. Submit a pull request.
 
-## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact Us
-
-If you have any questions or feedback, feel free to reach out to us at [contact@arboutique.com](mailto:contact@arboutique.com).
 
