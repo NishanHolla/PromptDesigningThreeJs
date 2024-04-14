@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import Navbar from './components/navbar';
+import { useSnapshot } from 'valtio';
+import store from './store/index';
 import product1 from './images/product1.png';
-import {proxy,snapshot} from 'valtio';
-
+import { Link } from 'react-router-dom';
 
 const CheckoutPage = () => {
-  const products = [
-    { id: 1, name: 'product1', price: 10, image: 'product1' },
-    { id: 2, name: 'product2', price: 20, image: 'product2' },
-    { id: 3, name: 'product3', price: 30, image: 'product3' }
-  ];
+  const snap = useSnapshot(store);
+  const products = snap.cart;
 
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [address, setAddress] = useState('');
@@ -97,27 +95,31 @@ const CheckoutPage = () => {
               placeholder="Postal Code"
               className="address-field"
             />
-             <button className="save-address-button" onClick={handleSaveAddress}>Save Address</button>
+            <button className="save-address-button" onClick={handleSaveAddress}>Save Address</button>
           </div>
         </div>
         <div className="product-column">
-          <h2>Products</h2>
-          <div className="product-list">
-            {products.map(product => (
-              <div key={product.id} className="product-item" onClick={() => handleProductSelection(product.id)}>
-                <input
-                  type="checkbox"
-                  checked={selectedProducts.includes(product.id)}
-                  onChange={() => {}} // We handle selection on parent div click, not checkbox change
-                />
-                <img src={product1} alt={product.name} />
-                <label>{product.name} - ${product.price}</label>
-              </div>
-            ))}
-          </div>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom:"20px" }}>Products</h1>
+          {products.length === 0 ? (
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', fontStyle: 'italic' }}>You haven't added any items. <Link to="/">Continue shopping</Link></h1>
+          ) : (
+            <div className="product-list">
+              {products.map(product => (
+                <div key={product.id} className="product-item" onClick={() => handleProductSelection(product.id)}>
+                  <input
+                    type="checkbox"
+                    checked={selectedProducts.includes(product.id)}
+                    onChange={() => {}} 
+                  />
+                  <img src={product.image} alt={product.name} />
+                  <label>{product.name} - {product.price}</label>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-      <button className="checkout-button" onClick={handleCheckout}>Checkout</button>
+      {products.length > 0 && <button className="checkout-button" onClick={handleCheckout}>Checkout</button>}
     </>
   );
 };

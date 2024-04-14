@@ -2,7 +2,7 @@ import React from "react";
 import store from "/src/store/index"; // Import the Valtio store
 import { useSnapshot } from "valtio";
 import { ToastContainer, toast } from "react-toastify"; // Import toast from react-toastify
-import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toastify
+import 'react-toastify/dist/ReactToastify.css'; 
 
 interface ProdType {
   id: number;
@@ -20,7 +20,7 @@ const Product: React.FC<ProdType> = (props) => {
   const handleAddToCart = () => {
     store.cart.push({ id, image, name, description, price });
     console.log(snap.cart);
-    toast.success(`${name} added to cart`); 
+    toast(`${name} added to cart`); 
   };
 
   const handleViewDetails = () => {

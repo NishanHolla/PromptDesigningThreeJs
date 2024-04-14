@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import main from '../images/mainlogo.png';
 import { Link } from 'react-router-dom';
+import { useSnapshot } from "valtio"; // Removed unnecessary import
+import store from '../store/index';
+import { Navigate } from 'react-router-dom';
 
 const login = async (credentials) => {
   try {
@@ -18,7 +21,6 @@ const login = async (credentials) => {
     }
 
     const data = await response.json();
-    authState.isLoggedIn = true;
     return data;
   } catch (error) {
     console.error('Error during login:', error.message);
@@ -27,7 +29,9 @@ const login = async (credentials) => {
 };
 
 function Login() {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [message, setMessage] = useState("");
+  const snap = useSnapshot(store);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,8 +42,14 @@ function Login() {
     e.preventDefault();
     try {
       const data = await login(formData);
+      store.isLoggedIn = true; 
+      store.email = formData.email;
+      store.username = data.username;
+      localStorage.setItem('token', data.token);
       console.log('Login successful:', data);
+      return <Navigate to="/userinfo" replace />; 
     } catch (error) {
+      setMessage(error.message);
       console.error('Error during login:', error.message);
     }
   };
@@ -52,10 +62,11 @@ function Login() {
             <div className="text-center mb-4">
               <img src={main} alt="Logo" width="150" />
             </div>
+            <h3 style={{color:"red"}}>{message}</h3>
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Enter username" />
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="text" name="email" value={formData.email} onChange={handleChange} placeholder="Enter email" />
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">

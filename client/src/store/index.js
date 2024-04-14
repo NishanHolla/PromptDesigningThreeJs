@@ -10,7 +10,7 @@ const state = proxy({
   cart:[],
   username: '',
   email: '',
-  loggedIn: false
+  isLoggedIn: true
 });
 
 export default state;

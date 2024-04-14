@@ -2,6 +2,7 @@ import Product from './product';
 import products from "./items";
 import Navbar from "../navbar";
 import banner from '/src/assets/banner.gif';
+
 interface ProdType {
   id: number;
   image: string;
