@@ -7,11 +7,13 @@ function Register() {
   const [email, setEmail] = React.useState(""); // State for email input
   const [username, setUsername] = React.useState(""); // State for username input
   const [password, setPassword] = React.useState(""); // State for password input
+  const [message, setMessage] = React.useState("");
+  const role = 'user';
 
   const handleFormSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault(); 
   
-    const data = { email, username, password };
+    const data = { email, username, password, role };
   
     try {
       const response = await fetch('http://localhost:3000/api/auth/register', {
@@ -23,28 +25,30 @@ function Register() {
       });
   
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Registration failed. Please try again later.');
       }
   
       console.log('Registration successful!');
       
-      // Reset form fields after successful submission (optional)
       setEmail("");
       setUsername("");
       setPassword("");
     } catch (error) {
+      setMessage(error.message);
       console.error('Error:', error);
     }
   };
+  
   
   return (
     <Container fluid style={{ backgroundColor: "pink" }}>
       <Row className="justify-content-center align-items-center vh-100">
         <Col md={4}>
           <div className="card p-4">
-          <div className="text-center mb-4">
+            <div className="text-center mb-4">
               <img src={main} alt="Logo" width="150" />
             </div>
+            <h3 style={{color:"red"}}>{message}</h3>
             <Form onSubmit={handleFormSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email Address</Form.Label>

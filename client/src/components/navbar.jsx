@@ -1,31 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import Main from '../images/mainlogo.png';
 import cart from '../images/shopping-cart.png';
 import user from '../images/user.png';
 import { Link } from "react-router-dom";
+import { useSnapshot } from "valtio";
+import store from '../store/index';
+import Button from 'react-bootstrap/Button';
+import NavDropdown from 'react-bootstrap/NavDropdown'; // Add import for NavDropdown
 
-function Navbar(){
-    return(
+
+function Navbar() {
+  const snap = useSnapshot(store);
+  const [showUserMenu, setShowUserMenu] = useState(false); // Define showUserMenu sta
+
+  const handleLogout = () =>{
+    localStorage.removeItem('token');
+    store.isLoggedIn = false;
+    store.email = '';
+    store.username = '';
+  }
+
+  return (
     <div>
-    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "pink", height: "24px" }}>
-      <div className="navbar-collapse d-flex justify-content-center">
-        <a className="navbar floatingbanner" href="/">Free shipping for orders above Rs.999</a>
-      </div>
-    </nav>
-    <nav class="navbar navbar-expand-lg">
-      <a class="navbar-brand" href="/">
-        <img src={Main} className="main"></img>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div>
+      <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "pink", height: "24px" }}>
+        <div className="navbar-collapse d-flex justify-content-center">
+          <a className="navbar floatingbanner" href="/">Free shipping for orders above Rs.999</a>
+        </div>
+      </nav>
+      <nav className="navbar navbar-expand-lg">
+        <a className="navbar-brand" href="/">
+          <img src={Main} className="main" alt="Main Logo" />
+        </a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div>
           <Link className="nav-item" to='/products'>
             DRESSES
           </Link>
           <Link className="nav-item" to='/products'>
-            JEWELERY
+            JEWELRY
           </Link>
           <Link className="nav-item" to='/products'>
             SHIRTS
@@ -36,19 +51,27 @@ function Navbar(){
           <Link className="colorful-text" to='/BoutiqueGPT'>
             Prompt Designing
           </Link>
-        <aside>
-        <input class="form-control mr-sm-2" id="searchbar" type="search" placeholder="What am i wearing next ..." aria-label="Search" />
-        <Link to='/checkout'>
-          <img src={cart} className="icon"></img>
-        </Link>
-        <Link to="/login">
-          <img src={user} style={{right:"10px"}} className="icon"></img>
-        </Link>
-        </aside>
-      </div>
-    </nav>
+          <aside>
+            <input className="form-control mr-sm-2" id="searchbar" type="search" placeholder="What am i wearing next ..." aria-label="Search" />
+            <Link to='/checkout'>
+              <img src={cart} className="icon" alt="Cart" />
+            </Link>
+            <div className="icon" style={{right:"5px",top:"8px"}}>
+            {snap.isLoggedIn ? (
+              <NavDropdown title={<img src={user} className="icon" style={{position:"absolute", right:"25px", top:"2px"}} alt="User" />} id="basic-nav-dropdown" show={showUserMenu} onClick={() => setShowUserMenu(!showUserMenu)}>
+                <NavDropdown.Item href="/userinfo">User Info</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              </NavDropdown>  
+            ) : ( 
+              <Link to="/login"><Button variant="outline-primary">Login</Button></Link>
+            )} 
+            </div>
+          </aside>
+        </div>
+      </nav>
     </div>
-    );
+  );
 }
 
 export default Navbar;

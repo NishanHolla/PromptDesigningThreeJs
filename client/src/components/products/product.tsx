@@ -1,7 +1,8 @@
 import React from "react";
 import store from "/src/store/index"; // Import the Valtio store
+import { useSnapshot } from "valtio";
 import { ToastContainer, toast } from "react-toastify"; // Import toast from react-toastify
-import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toastify
+import 'react-toastify/dist/ReactToastify.css'; 
 
 interface ProdType {
   id: number;
@@ -12,24 +13,21 @@ interface ProdType {
 }
 
 const Product: React.FC<ProdType> = (props) => {
-  // Get the product data from props
-  const { id, image, name, description, price } = props;
 
-  // Define a function to handle adding the product to the cart
+  const { id, image, name, description, price } = props;
+  const snap = useSnapshot(store);
+
   const handleAddToCart = () => {
-    // Add product details to the cart state in the Valtio store
     store.cart.push({ id, image, name, description, price });
-    toast.success(`${name} added to cart`); // Show success toast
+    console.log(snap.cart);
+    toast(`${name} added to cart`); 
   };
 
-  // Define a function to handle viewing the product details
   const handleViewDetails = () => {
-    // You can use any routing or modal to display the product details
-    // For simplicity, we will just log the product name to the console
+
     console.log(`Viewed ${name} details`);
   };
 
-  // Return the JSX for the product component
   return (
     <div className="product">
       <ToastContainer/>
