@@ -88,27 +88,6 @@ const products = [
     description: "Zipper hoodie in black color from the souled store",
     price: "$120.00",
   },
-  // {
-  //   id: 13,
-  //   image: "https://source.unsplash.com/random/300x300?sig=13",
-  //   name: "Product 13",
-  //   description: "This is a description of product 13",
-  //   price: "$130.00",
-  // },
-  // {
-  //   id: 14,
-  //   image: "https://source.unsplash.com/random/300x300?sig=14",
-  //   name: "Product 14",
-  //   description: "This is a description of product 14",
-  //   price: "$140.00",
-  // },
-  // {
-  //   id: 15,
-  //   image: "https://source.unsplash.com/random/300x300?sig=15",
-  //   name: "Product 15",
-  //   description: "This is a description of product 15",
-  //   price: "$150.00",
-  // },
 ];
 
 export default products;
