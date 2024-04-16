@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import main from '../images/mainlogo.png';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useSnapshot } from "valtio"; // Removed unnecessary import
 import store from '../store/index';
-import { Navigate } from 'react-router-dom';
 
 const login = async (credentials) => {
   try {
@@ -32,6 +31,7 @@ function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [message, setMessage] = useState("");
   const snap = useSnapshot(store);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,12 +42,12 @@ function Login() {
     e.preventDefault();
     try {
       const data = await login(formData);
-      store.isLoggedIn = true; 
       store.email = formData.email;
       store.username = data.username;
+      store.userId = data.userId;
       localStorage.setItem('token', data.token);
-      console.log('Login successful:', data);
-      return <Navigate to="/userinfo" replace />; 
+      console.log('Login successful:', snap.username);
+      navigate('/');
     } catch (error) {
       setMessage(error.message);
       console.error('Error during login:', error.message);

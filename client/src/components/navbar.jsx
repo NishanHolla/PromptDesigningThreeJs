@@ -6,18 +6,18 @@ import { Link } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import store from '../store/index';
 import Button from 'react-bootstrap/Button';
-import NavDropdown from 'react-bootstrap/NavDropdown'; // Add import for NavDropdown
-
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Navbar() {
-  const snap = useSnapshot(store);
-  const [showUserMenu, setShowUserMenu] = useState(false); // Define showUserMenu sta
+  const token = localStorage.getItem('token');
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const handleLogout = () =>{
     localStorage.removeItem('token');
     store.isLoggedIn = false;
     store.email = '';
     store.username = '';
+    return <Navigate to ='/' replace />;
   }
 
   return (
@@ -57,9 +57,11 @@ function Navbar() {
               <img src={cart} className="icon" alt="Cart" />
             </Link>
             <div className="icon" style={{right:"5px",top:"8px"}}>
-            {snap.isLoggedIn ? (
+            {token ? (
               <NavDropdown title={<img src={user} className="icon" style={{position:"absolute", right:"25px", top:"2px"}} alt="User" />} id="basic-nav-dropdown" show={showUserMenu} onClick={() => setShowUserMenu(!showUserMenu)}>
                 <NavDropdown.Item href="/userinfo">User Info</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/orders">My Orders</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
               </NavDropdown>  

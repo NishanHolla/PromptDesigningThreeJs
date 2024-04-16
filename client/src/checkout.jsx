@@ -15,6 +15,7 @@ const CheckoutPage = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [postalCode, setPostalCode] = useState('');
+  const [addressError, setAddressError] = useState(false); // State for address error
 
   const handleProductSelection = (productId) => {
     const isSelected = selectedProducts.includes(productId);
@@ -48,7 +49,14 @@ const CheckoutPage = () => {
   const handleSaveAddress = () => {
     console.log('Address Saved:', address, street, city, state, postalCode);
   };
+
   const handleCheckout = () => {
+    // Check if any address field is empty
+    if (!address || !street || !city || !state || !postalCode) {
+      setAddressError(true);
+      return; // Don't proceed with checkout
+    }
+
     console.log('Selected products:', selectedProducts);
     console.log('Address:', address, street, city, state, postalCode);
   };
@@ -97,26 +105,27 @@ const CheckoutPage = () => {
             />
             <button className="save-address-button" onClick={handleSaveAddress}>Save Address</button>
           </div>
+          {addressError && <p className="error-message">Please fill in all address fields.</p>} {/* Error message */}
         </div>
         <div className="product-column">
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom:"20px" }}>Products</h1>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: "20px" }}>Products</h1>
           {products.length === 0 ? (
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', fontStyle: 'italic' }}>You haven't added any items. <Link to="/">Continue shopping</Link></h1>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', fontStyle: 'italic' }}>You haven't added any items. <Link to="/">Continue shopping</Link></h1>
           ) : (
-            <div className="product-list">
-              {products.map(product => (
-                <div key={product.id} className="product-item" onClick={() => handleProductSelection(product.id)}>
-                  <input
-                    type="checkbox"
-                    checked={selectedProducts.includes(product.id)}
-                    onChange={() => {}} 
-                  />
-                  <img src={product.image} alt={product.name} />
-                  <label>{product.name} - {product.price}</label>
-                </div>
-              ))}
-            </div>
-          )}
+              <div className="product-list">
+                {products.map(product => (
+                  <div key={product.id} className="product-item" onClick={() => handleProductSelection(product.id)}>
+                    <input
+                      type="checkbox"
+                      checked={selectedProducts.includes(product.id)}
+                      onChange={() => { }}
+                    />
+                    <img src={product.image} alt={product.name} />
+                    <label>{product.name} - {product.price}</label>
+                  </div>
+                ))}
+              </div>
+            )}
         </div>
       </div>
       {products.length > 0 && <button className="checkout-button" onClick={handleCheckout}>Checkout</button>}

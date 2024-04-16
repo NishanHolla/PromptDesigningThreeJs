@@ -9,8 +9,8 @@ const state = proxy({
   fullDecal: './threejs.png',
   cart:[],
   username: '',
+  userId:"",
   email: '',
-  isLoggedIn: true
 });
 
 export default state;

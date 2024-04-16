@@ -13,7 +13,7 @@ async function getProducts() {
     return data;
   } catch (error) {
     console.error('There was a problem with your fetch operation:', error);
-    throw error; // Re-throw the error to handle it outside of this function
+    throw error; 
   }
 }
 

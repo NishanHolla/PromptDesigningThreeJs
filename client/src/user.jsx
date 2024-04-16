@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { Form, Button } from 'react-bootstrap';
 import store from './store/index'; 
@@ -12,7 +12,7 @@ function User() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [address, setAddress] = useState(snap.address);
   const [message, setMessage] = useState('');
-
+  useEffect(()=>{console.log(snap.username);})
   const handleUpdateUsername = () => {
     // Your logic to update the username
     store.username = username;
