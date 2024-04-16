@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { Form, Button } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 import store from './store/index'; 
 import Navbar from './components/navbar';
 
@@ -12,9 +13,19 @@ function User() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [address, setAddress] = useState(snap.address);
   const [message, setMessage] = useState('');
-  useEffect(()=>{console.log(snap.username);})
+  
+  useEffect(() => {
+    // Check for token
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Navigate to login if no token is present
+      return <Navigate to="/login" />;
+    }
+
+    // Perform token validation here if needed
+  }, []); // Empty dependency array to run only once on component mount
+
   const handleUpdateUsername = () => {
-    // Your logic to update the username
     store.username = username;
     setMessage('Username updated successfully!');
   };

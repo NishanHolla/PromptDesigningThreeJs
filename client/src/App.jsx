@@ -1,7 +1,7 @@
 import Canvas from './canvas';
 import Customizer from './pages/Customizer';
 import Home from './pages/Home';
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import {BrowserRouter, Route, Routes, Navigate, useNavigate} from 'react-router-dom';
 import Root from './routes/root';
 import Login from './routes/login';
 import Register from './routes/register';
@@ -12,9 +12,20 @@ import { useSnapshot } from 'valtio';
 import state from './store/index'; 
 import User from './user';
 import OrderDetailsPage from './order';
+import { useEffect } from 'react';
+import OrderConfirmedPage from './orderConfirm';
 
-function BoutiqueGPT(){
-  return(
+function BoutiqueGPT() {
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  },[])
+
+  return (
     <main className="app transition-all ease-in">
       <Home />
       <Canvas />
@@ -35,6 +46,7 @@ function App() {
           <Route path="products" element={<MainPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="register" element={<Register />} />
+          <Route path="orderConfimed" element={<OrderConfirmedPage/>} />
           <Route
             path="login"
             element={token ? <Navigate to="/userInfo" replace /> : <Login />}

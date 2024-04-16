@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Main from '../images/mainlogo.png';
 import cart from '../images/shopping-cart.png';
 import user from '../images/user.png';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import store from '../store/index';
 import Button from 'react-bootstrap/Button';
@@ -11,13 +11,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 function Navbar() {
   const token = localStorage.getItem('token');
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () =>{
     localStorage.removeItem('token');
     store.isLoggedIn = false;
     store.email = '';
     store.username = '';
-    return <Navigate to ='/' replace />;
+    navigate('/');
   }
 
   return (
