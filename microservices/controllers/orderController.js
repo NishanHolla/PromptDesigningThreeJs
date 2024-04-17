@@ -41,8 +41,8 @@ exports.getOrderDetails = async (req, res) => {
     // Extract order ID from request params
     const orderId = req.params.orderId;
 
-    // Fetch order details from the database
-    const order = await Order.findById(orderId);
+    // Fetch order details from the database based on orderId
+    const order = await Order.findOne({ orderId });
 
     // Check if order exists
     if (!order) {
