@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { Form, Button } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 import store from './store/index'; 
 import Navbar from './components/navbar';
 import { useNavigate } from 'react-router-dom';
@@ -46,7 +47,6 @@ function User() {
   }, []); // Run only once when the component mounts
 
   const handleUpdateUsername = () => {
-    // Your logic to update the username
     store.username = username;
     setMessage('Username updated successfully!');
   };

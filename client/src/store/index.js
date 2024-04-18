@@ -12,6 +12,7 @@ const state = proxy({
   username: '',
   userId:"",
   email: '',
+  address: '',
 });
 
 export default state;

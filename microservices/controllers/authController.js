@@ -45,12 +45,13 @@ exports.login = async (req, res) => {
 
     const token = generateToken(user);
 
-    res.status(200).json({ token });
+    res.status(200).json({ token, "userId":user.userId, "username":user.username });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 exports.validate = async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -73,9 +74,19 @@ exports.validate = async (req, res, next) => {
 
     // Access user information from the decoded token (assuming structure)
     const userId = decoded.userId;
-    const username = decoded.username; // Adjust field names based on your JWT structure
-    const email = decoded.email; // Adjust field names based on your 
 
+    // Fetch user details from the database using userId
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Include user information in the response
+    const { username, email } = user;
+    res.status(200).json({ username, userId, email });
+
+    // Optionally, you can include user information in the request object
     req.user = { userId, username, email }; // Include desired user fields
 
     next();
@@ -84,6 +95,7 @@ exports.validate = async (req, res, next) => {
     res.status(403).json({ message: 'Invalid token' });
   }
 };
+
 
 
 function generateToken(user) {

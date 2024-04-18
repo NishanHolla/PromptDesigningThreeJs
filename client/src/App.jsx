@@ -1,7 +1,7 @@
 import Canvas from './canvas';
 import Customizer from './pages/Customizer';
 import Home from './pages/Home';
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import {BrowserRouter, Route, Routes, Navigate, useNavigate} from 'react-router-dom';
 import Root from './routes/root';
 import Login from './routes/login';
 import Register from './routes/register';
@@ -12,10 +12,24 @@ import { useSnapshot } from 'valtio';
 import state from './store/index'; 
 import User from './user';
 import OrderDetailsPage from './order';
+<<<<<<< HEAD
 import OrderConfirmed from './orderConfirm';
+=======
+import { useEffect } from 'react';
+import OrderConfirmedPage from './orderConfirm';
+>>>>>>> d8915d8414462c2b6d12f502e229732aad3f627e
 
-function BoutiqueGPT(){
-  return(
+function BoutiqueGPT() {
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  },[])
+
+  return (
     <main className="app transition-all ease-in">
       <Home />
       <Canvas />
