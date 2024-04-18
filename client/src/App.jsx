@@ -12,12 +12,7 @@ import { useSnapshot } from 'valtio';
 import state from './store/index'; 
 import User from './user';
 import OrderDetailsPage from './order';
-<<<<<<< HEAD
 import OrderConfirmed from './orderConfirm';
-=======
-import { useEffect } from 'react';
-import OrderConfirmedPage from './orderConfirm';
->>>>>>> d8915d8414462c2b6d12f502e229732aad3f627e
 
 function BoutiqueGPT() {
   const navigate = useNavigate();
