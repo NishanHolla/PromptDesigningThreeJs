@@ -12,6 +12,7 @@ import { useSnapshot } from 'valtio';
 import state from './store/index'; 
 import User from './user';
 import OrderDetailsPage from './order';
+import OrderConfirmed from './orderConfirm';
 
 function BoutiqueGPT(){
   return(
@@ -35,16 +36,14 @@ function App() {
           <Route path="products" element={<MainPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="register" element={<Register />} />
-          <Route
-            path="login"
-            element={token ? <Navigate to="/userInfo" replace /> : <Login />}
-          />
+          <Route path="orderConfirm" element={<OrderConfirmed />} />
+          <Route path="login" element={<Login />} />
           <Route
             path="userInfo"
             element={token ? <User /> : <Navigate to="/login" replace />}
           />
           <Route path="orders" element={<OrderDetailsPage />} />
-          <Route path="/BoutiqueGPT" element={<BoutiqueGPT />} />
+          <Route path="/BoutiqueGPT" element={<BoutiqueGPT />} /> 
         </Routes>
       </BrowserRouter>
     </>

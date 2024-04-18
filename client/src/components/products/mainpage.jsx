@@ -25,14 +25,13 @@ function MainPage() {
       try {
         const productsData = await getProducts();
         setProducts(productsData);
+        console.log(productsData);
       } catch (error) {
-        // Handle errors appropriately, such as displaying an error message to the user
         console.error('Error fetching products:', error);
       }
     }
-
     fetchProducts();
-  }, []); // Run this effect only once on component mount
+  }, []); 
 
   return (
     <div className="product-container">
@@ -43,7 +42,7 @@ function MainPage() {
       <img src={banner} className="product-banner" alt="banner" />
       <div className="products-list">
         {products.map(product => (
-          <Product key={product.id} {...product} />
+          <Product key={product.productId} {...product} />
         ))}
       </div>
     </div>

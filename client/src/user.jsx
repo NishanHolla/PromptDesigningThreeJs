@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio';
 import { Form, Button } from 'react-bootstrap';
 import store from './store/index'; 
 import Navbar from './components/navbar';
+import { useNavigate } from 'react-router-dom';
 
 function User() {
   const snap = useSnapshot(store);
@@ -12,7 +13,38 @@ function User() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [address, setAddress] = useState(snap.address);
   const [message, setMessage] = useState('');
-  useEffect(()=>{console.log(snap.username);})
+  const [validToken, setValidToken] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function validateToken() {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.log('Token not found');
+          return;
+        }
+        const response = await fetch('http://localhost:3000/api/auth/validate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (response.ok) {
+          setValidToken(true);
+        } else {
+          setValidToken(false);
+          console.log('Invalid token');
+        }
+      } catch (error) {
+        console.error('Error validating token:', error);
+      }
+    }
+
+    validateToken();
+  }, []); // Run only once when the component mounts
+
   const handleUpdateUsername = () => {
     // Your logic to update the username
     store.username = username;
@@ -41,6 +73,11 @@ function User() {
     // You can open a modal or navigate to a different page for editing the address
   };
 
+  if (!validToken) {
+    navigate('/login');
+    return <div>Invalid token. Please login again.</div>;
+  } 
+
   return (
     <div>
       <header>
@@ -49,58 +86,6 @@ function User() {
       <div style={{ maxWidth: '500px', margin: 'auto', fontFamily: 'Arial, sans-serif' }}>
         <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>Welcome, {snap.username}!</h1>
         <h2 style={{ fontSize: '1.5rem' }}>User Details</h2>
-        <Form.Group controlId="formUsername">
-          <Form.Label style={{ marginBottom: '0.5rem' }}>Username</Form.Label>
-          <Form.Control 
-            type="text" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
-            style={{ marginBottom: '1rem' }}
-          />
-          <Button variant="primary" onClick={handleUpdateUsername} style={{ marginRight: '0.5rem' }}>Update Username</Button>
-        </Form.Group>
-        <Form.Group controlId="formEmail">
-          <Form.Label style={{ marginBottom: '0.5rem' }}>Email</Form.Label>
-          <Form.Control 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            style={{ marginBottom: '1rem' }}
-          />
-          <Button variant="primary" onClick={handleUpdateEmail} style={{ marginRight: '0.5rem' }}>Update Email</Button>
-        </Form.Group>
-        <Form.Group controlId="formAddress">
-          <Form.Label style={{ marginBottom: '0.5rem' }}>Address</Form.Label>
-          <Form.Control 
-            as="textarea"
-            rows={3}
-            value={address}
-            readOnly
-            style={{ marginBottom: '1rem' }}
-          />
-          <Button variant="primary" onClick={handleEditAddress} style={{ marginRight: '0.5rem' }}>Edit Address</Button>
-        </Form.Group>
-        <hr />
-        <Form.Group controlId="formNewPassword">
-          <Form.Label style={{ marginBottom: '0.5rem' }}>New Password</Form.Label>
-          <Form.Control 
-            type="password" 
-            value={newPassword} 
-            onChange={(e) => setNewPassword(e.target.value)} 
-            style={{ marginBottom: '1rem' }}
-          />
-        </Form.Group>
-        <Form.Group controlId="formConfirmPassword">
-          <Form.Label style={{ marginBottom: '0.5rem' }}>Confirm New Password</Form.Label>
-          <Form.Control 
-            type="password" 
-            value={confirmPassword} 
-            onChange={(e) => setConfirmPassword(e.target.value)} 
-            style={{ marginBottom: '1rem' }}
-          />
-          <Button variant="primary" onClick={handleUpdatePassword} style={{ marginRight: '0.5rem' }}>Update Password</Button>
-        </Form.Group>
-        <div style={{ color: 'green', marginBottom: '1rem' }}>{message}</div>
       </div>
     </div>
   );
