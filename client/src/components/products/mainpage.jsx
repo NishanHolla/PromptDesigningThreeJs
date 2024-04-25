@@ -5,7 +5,7 @@ import Product from './product';
 
 async function getProducts() {
   try {
-    const response = await fetch('http://localhost:3000/api/products/products');
+    const response = await fetch('http://localhost:3001/api/products/products');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }

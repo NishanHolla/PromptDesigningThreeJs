@@ -3,8 +3,8 @@ export default function ErrorPage() {
 
   return (
     <div id="error-page">
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
+      <h1>Yeeeeeeee</h1>
+      <p>Your order has been orderConfirmed</p>
     </div>
   );
 }

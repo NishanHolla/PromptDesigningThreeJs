@@ -12,7 +12,7 @@ function OrderDetailsPage() {
       return;
     }
 
-    fetch(`http://localhost:3000/api/orders/order/${orderId}`)
+    fetch(`http://localhost:3002/api/orders/order/${orderId}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

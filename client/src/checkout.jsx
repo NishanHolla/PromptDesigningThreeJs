@@ -45,54 +45,63 @@ const CheckoutPage = () => {
   };
 
   const handleSaveAddress = () => {
-    // Check if any address field is empty
     if (!street || !city || !state || !postalCode) {
       setAddressError(true);
-      return; // Don't save the address
+      return;
     }
   
     console.log('Address Saved:', street, city, state, postalCode);
-    // Save address to store
     store.address = { street, city, state, postalCode };
-    setAddressSaved(true); // Set addressSaved to true to display the message
-    // Reset address fields
-    setStreet('');
-    setCity('');
-    setState('');
-    setPostalCode('');
-    // Hide the "Address saved" message after 3 seconds
-    setTimeout(() => {
-      setAddressSaved(false);
-    }, 3000);
+    setAddressSaved(true);
   };
   
 
   const handleCheckout = async () => {
-    if (!street || !city || !state || !postalCode) {
+    if (!addressSaved) {
       setAddressError(true);
       return;
     }
-
+  
     const token = localStorage.getItem('token');
-    console.log(token)
     if (!token) {
-      navigate('/login');
+      navigate('/orderConfirmed');
       return;
     }
-
+  
     try {
-      const response = await fetch('http://localhost:3000/api/validate', {
+      const response = await fetch('http://localhost:3000/api/auth/validate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       if (response.ok) {
-        console.log('Selected products:', selectedProducts);
-        console.log('Address:', address, street, city, state, postalCode);
-        navigate('/orderConfirmed')
+        const orderData = {
+          orderId: "123456666",
+          userId: "321",
+          email: "nishan@gmail.com",
+          products: selectedProducts, // assuming selectedProducts is an array of product IDs
+          totalAmount: "320",
+          address: `${street}, ${city}, ${state}, ${postalCode}`
+        };
+  
+        const orderResponse = await fetch('http://localhost:3002/api/orders/order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(orderData),
+        });
+  
+        if (orderResponse.ok) {
+          console.log('Order placed successfully:', orderData);
+          navigate('/orderConfirmed');
+        } else {
+          console.log('Failed to place order');
+        }
       } else {
         navigate('/login');
       }
@@ -101,6 +110,7 @@ const CheckoutPage = () => {
       navigate('/login');
     }
   };
+  
 
   return (
     <>
