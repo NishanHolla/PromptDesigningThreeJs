@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import Navbar from './components/navbar';
-import { useSnapshot } from 'valtio';
-import store from './store/index';
 
 const OrderConfirmed = () => {
-  const snap = useSnapshot(store);
-  const userId = snap.userId;
-  const email = snap.email;
-  const address = snap.address;
-  const cart = snap.cart;
   const [orderId, setOrderId] = useState('');
   const [orderDetails, setOrderDetails] = useState(null); // State to store order details
 

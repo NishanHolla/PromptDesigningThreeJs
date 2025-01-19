@@ -4,8 +4,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSnapshot } from 'valtio';
-import store from '../store/index';
 import Main from '../images/mainlogo.png';
 
 function Navbar() {
@@ -23,9 +21,6 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    store.isLoggedIn = false;
-    store.email = '';
-    store.username = '';
     navigate('/');
   };
 

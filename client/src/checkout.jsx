@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { useSnapshot } from 'valtio';
-import store from './store/index';
 import { Link } from 'react-router-dom';
 import {
   Container,

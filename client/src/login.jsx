@@ -39,11 +39,11 @@ function Login() {
     e.preventDefault();
     try {
       const data = await login(formData);
-      store.email = formData.email;
-      store.username = data.username;
-      store.userId = data.userId;
       localStorage.setItem('token', data.token);
-      console.log('Login successful:', snap.username);
+      localStorage.setItem('userId', data.userId);
+      localStorage.setItem('username', data.username);
+      localStorage.setItem('email', formData.email);
+      console.log('Login successful:', data.username);
       navigate('/');
     } catch (error) {
       setMessage(error.message);

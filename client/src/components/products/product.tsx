@@ -1,14 +1,9 @@
 import React from "react";
-import store from "/src/store/index"; // Import the Valtio store
-import { useSnapshot } from "valtio";
 
 const Product = (props) => {
   const { id, productId, image, name, description, price } = props;
-  const snap = useSnapshot(store);
 
   const handleAddToCart = () => {
-    store.cart.push({ productId, image, name, description, price });
-    console.log(snap.cart);
     // toast(`${name} added to cart`);
   };
 
