@@ -1,40 +1,25 @@
-import Canvas from './canvas';
-import Customizer from './pages/Customizer';
-import Home from './pages/Home';
-import {BrowserRouter, Route, Routes, Navigate, useNavigate} from 'react-router-dom';
-import Root from './routes/root';
-import Login from './routes/login';
-import Register from './routes/register';
-import ErrorPage from './error-page';
-import MainPage from './components/products/mainpage';
-import CheckoutPage from './checkout';
-import { useSnapshot } from 'valtio';
-import state from './store/index'; 
-import User from './user';
-import OrderDetailsPage from './order';
-import OrderConfirmed from './orderConfirm';
-
-function BoutiqueGPT() {
-  const navigate = useNavigate();
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-    }
-  },[])
-
-  return (
-    <main className="app transition-all ease-in">
-      <Home />
-      <Canvas />
-      <Customizer />
-    </main>
-  );
-}
+// import Canvas from './canvas';
+// import Customizer from './pages/Customizer';
+import Home from "./pages/Home";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
+import Root from "./root";
+import Login from "./login";
+import Register from "./register";
+import ErrorPage from "./error-page";
+import MainPage from "./components/products/mainpage";
+import CheckoutPage from "./checkout";
+import User from "./user";
+import OrderDetailsPage from "./order";
+import OrderConfirmed from "./orderConfirm";
 
 function App() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   return (
     <>
@@ -52,11 +37,10 @@ function App() {
             element={token ? <User /> : <Navigate to="/login" replace />}
           />
           <Route path="orders" element={<OrderDetailsPage />} />
-          <Route path="/BoutiqueGPT" element={<BoutiqueGPT />} /> 
         </Routes>
       </BrowserRouter>
     </>
   );
 }
 
-export default App
+export default App;

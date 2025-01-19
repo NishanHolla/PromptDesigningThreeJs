@@ -1,78 +1,119 @@
-import React, { useState } from "react";
-import Main from '../images/mainlogo.png';
-import cart from '../images/shopping-cart.png';
-import user from '../images/user.png';
-import { Link, useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
+import React, { useState } from 'react';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Button, Menu, MenuItem, Box } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 import store from '../store/index';
-import Button from 'react-bootstrap/Button';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import Main from '../images/mainlogo.png';
 
 function Navbar() {
   const token = localStorage.getItem('token');
-  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogout = () =>{
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
     localStorage.removeItem('token');
     store.isLoggedIn = false;
     store.email = '';
     store.username = '';
     navigate('/');
-  }
+  };
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "pink", height: "24px" }}>
-        <div className="navbar-collapse d-flex justify-content-center">
-          <a className="navbar floatingbanner" href="/">Free shipping for orders above Rs.999</a>
-        </div>
-      </nav>
-      <nav className="navbar navbar-expand-lg">
-        <a className="navbar-brand" href="/">
-          <img src={Main} className="main" alt="Main Logo" />
-        </a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div>
-          <Link className="nav-item" to='/products'>
+      <AppBar position="static" style={{ backgroundColor: 'pink', height: '32px' }}>
+        <Toolbar style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Typography variant="body2" component="div" sx={{ color: 'black' }}>
+            <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
+              Free shipping for orders above Rs.999
+            </a>
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <AppBar position="static" style={{ backgroundColor: '#FFF' }}>
+        <Toolbar>
+          <Link to="/">
+            <img src={Main} className="main" alt="Main Logo" style={{ marginRight: '16px' }} />
+          </Link>
+          <Link to="/products" className="nav-item" style={{ color: 'black', textDecoration: 'none', marginRight: '16px' }}>
             DRESSES
           </Link>
-          <Link className="nav-item" to='/products'>
+          <Link to="/products" className="nav-item" style={{ color: 'black', textDecoration: 'none', marginRight: '16px' }}>
             JEWELRY
           </Link>
-          <Link className="nav-item" to='/products'>
+          <Link to="/products" className="nav-item" style={{ color: 'black', textDecoration: 'none', marginRight: '16px' }}>
             SHIRTS
           </Link>
-          <Link className="nav-item" to='/products'>
+          <Link to="/products" className="nav-item" style={{ color: 'black', textDecoration: 'none', marginRight: '16px' }}>
             SUNGLASSES
           </Link>
-          <Link className="colorful-text" to='/BoutiqueGPT'>
+          <Link to="/BoutiqueGPT" className="colorful-text" style={{ color: 'black', textDecoration: 'none', marginRight: '16px' }}>
             Prompt Designing
           </Link>
-          <aside>
-            <input className="form-control mr-sm-2" id="searchbar" type="search" placeholder="What am i wearing next ..." aria-label="Search" />
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <InputBase
+              placeholder="What am I wearing next ..."
+              inputProps={{ 'aria-label': 'search' }}
+              style={{ backgroundColor: '#f1f1f1', borderRadius: '4px', padding: '4px 8px', color: 'black', width: '300px', marginRight: '16px' }}
+            />
+            <IconButton type="submit" aria-label="search" style={{ color: 'black' }}>
+              <SearchIcon />
+            </IconButton>
             <Link to='/checkout'>
-              <img src={cart} className="icon" alt="Cart" />
+              <IconButton color="inherit" style={{ color: 'black' }}>
+                <ShoppingCartIcon />
+              </IconButton>
             </Link>
-            <div className="icon" style={{right:"5px",top:"8px"}}>
             {token ? (
-              <NavDropdown title={<img src={user} className="icon" style={{position:"absolute", right:"25px", top:"2px"}} alt="User" />} id="basic-nav-dropdown" show={showUserMenu} onClick={() => setShowUserMenu(!showUserMenu)}>
-                <NavDropdown.Item href="/userinfo">User Info</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="/orders">My Orders</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
-              </NavDropdown>  
-            ) : ( 
-              <Link to="/login"><Button variant="outline-primary">Login</Button></Link>
-            )} 
-            </div>
-          </aside>
-        </div>
-      </nav>
+              <div>
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                  style={{ color: 'black' }}
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={() => navigate('/userinfo')}>User Info</MenuItem>
+                  <MenuItem onClick={() => navigate('/orders')}>My Orders</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <Button color="inherit" style={{ color: 'black' }} onClick={() => navigate('/login')}>Login</Button>
+            )}
+          </Box>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }
